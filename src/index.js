@@ -13,6 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 // ── Archivos estáticos ────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+app.get("/", (req, res) => {
+  res.send("API funcionando correctamente 🚀");
+});
 // ── Rutas ─────────────────────────────────────────────────────
 app.use('/api/auth',           require('./routes/auth'));
 app.use('/api/roles',          require('./routes/roles'));
