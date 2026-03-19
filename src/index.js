@@ -4,7 +4,6 @@ const path    = require('path');
 require('dotenv').config();
 
 const app = express();
-const { verificarToken, soloAdmin } = require('./middlewares/auth.middleware'); // 👈 añadido
 
 // ── Middlewares globales ──────────────────────────────────────
 app.use(cors());
@@ -17,30 +16,25 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.get("/", (req, res) => {
   res.send("API funcionando correctamente 🚀");
 });
-
-// ── Rutas públicas (sin token) ────────────────────────────────
-app.use('/api/auth',       require('./routes/auth'));
-app.use('/api/catalogo',   require('./routes/catalogo'));
-app.use('/api/productos',  require('./routes/productos'));
-app.use('/api/categorias', require('./routes/categorias'));
-app.use('/api/colores',    require('./routes/colores'));
-app.use('/api/promociones',require('./routes/promociones'));
-
-// ── Rutas protegidas (requieren sesión) ───────────────────────
-app.use('/api/clientes',       verificarToken,            require('./routes/clientes'));
-app.use('/api/ventas',         verificarToken,            require('./routes/ventas'));
-app.use('/api/detalle-venta',  verificarToken,            require('./routes/detalleVenta'));
-app.use('/api/pagos',          verificarToken,            require('./routes/pagos'));
-
-// ── Rutas solo Admin ──────────────────────────────────────────
-app.use('/api/roles',          verificarToken, soloAdmin, require('./routes/roles'));
-app.use('/api/usuarios',       verificarToken, soloAdmin, require('./routes/usuarios'));
-app.use('/api/barrios',        verificarToken, soloAdmin, require('./routes/barrios'));
-app.use('/api/proveedores',    verificarToken, soloAdmin, require('./routes/proveedores'));
-app.use('/api/compras',        verificarToken, soloAdmin, require('./routes/compras'));
-app.use('/api/detalle-compra', verificarToken, soloAdmin, require('./routes/detalleCompra'));
-app.use('/api/dashboard',      verificarToken, soloAdmin, require('./routes/dashboard'));
-app.use('/api/imagenes',       verificarToken, soloAdmin, require('./routes/imagenes'));
+// ── Rutas ─────────────────────────────────────────────────────
+app.use('/api/auth',           require('./routes/auth'));
+app.use('/api/roles',          require('./routes/roles'));
+app.use('/api/usuarios',       require('./routes/usuarios'));
+app.use('/api/barrios',        require('./routes/barrios'));
+app.use('/api/clientes',       require('./routes/clientes'));
+app.use('/api/colores',        require('./routes/colores'));
+app.use('/api/categorias',     require('./routes/categorias'));
+app.use('/api/catalogo',       require('./routes/catalogo'));
+app.use('/api/productos',      require('./routes/productos'));
+app.use('/api/proveedores',    require('./routes/proveedores'));
+app.use('/api/compras',        require('./routes/compras'));
+app.use('/api/detalle-compra', require('./routes/detalleCompra'));
+app.use('/api/ventas',         require('./routes/ventas'));
+app.use('/api/detalle-venta',  require('./routes/detalleVenta'));
+app.use('/api/promociones',    require('./routes/promociones'));
+app.use('/api/pagos',          require('./routes/pagos'));
+app.use('/api/dashboard',      require('./routes/dashboard'));
+app.use('/api/imagenes',       require('./routes/imagenes'));
 
 // ── Manejador de errores global ───────────────────────────────
 app.use(require('./middlewares/errorHandler'));
