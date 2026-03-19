@@ -15,7 +15,6 @@ const getCatalogo = async (req, res) => {
         p.id_producto,
         p.nombre,
         p.descripcion,
-        p.referencia,
         p.precio_venta,
         p.talla,
         p.stock,
