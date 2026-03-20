@@ -10,4 +10,13 @@ const getResumen = async (req, res) => {
   }
 };
 
-module.exports = { getResumen };
+const getVentasMensuales = async (req, res) => {
+  try {
+    const data = await dashboardService.getVentasMensuales();
+    res.json(data);
+  } catch (err) {
+    res.status(err.status || 500).json({ message: err.message });
+  }
+};
+
+module.exports = { getResumen, getVentasMensuales };
