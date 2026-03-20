@@ -1,17 +1,12 @@
 // src/controllers/barrios.controller.js
-const pool = require("../config/db");
+const barriosService = require('../services/barrios.service');
 
 const getBarrios = async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT id_barrio, nombre, comuna, zona
-       FROM "Barrios"
-       ORDER BY comuna, nombre`
-    );
-    res.json(result.rows);
+    const data = await barriosService.getBarrios();
+    res.json(data);
   } catch (err) {
-    console.error("ERROR BARRIOS:", err);
-    res.status(500).json({ message: err.message });
+    res.status(err.status || 500).json({ message: err.message });
   }
 };
 
